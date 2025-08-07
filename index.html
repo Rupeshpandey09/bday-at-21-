@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .countdown {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        #countdown-timer {
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .time-block {
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+            background: rgba(255,105,180,0.2);
+            border-radius: 5px;
+            padding: 5px;
+            margin: 0 2px;
+            box-shadow: 0 0 5px rgba(255,105,180,0.5);
+            animation: pulse 1s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .birthday-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cake-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 2rem 0;
+            z-index: 5;
+        }
+        
+        .cake {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .candle {
+            position: absolute;
+            width: 20px;
+            height: 80px;
+            background: linear-gradient(to right, #ff8a00, #ff0058, #ff0000);
+            border-radius: 10px;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        .flame {
+            position: absolute;
+            width: 10px;
+            height: 30px;
+            background: linear-gradient(to top, #fff, #ff8a00, #ff0058);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px #ff8a00, 0 0 40px #ff0000;
+            animation: flicker 0.5s infinite alternate;
+            transform: translateX(-50%);
+            top: -30px;
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .message-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        .message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            text-align: right;
+            color: #ff69b4;
+            margin-top: 1rem;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.8);
+            animation: firework 2s ease-out infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        @keyframes firework {
+            0% { transform: translate(0, 0); opacity: 1; width: 5px; height: 5px; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; width: 100px; height: 100px; }
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: red;
+            opacity: 0;
+            animation: float 5s ease-in infinite;
+            z-index: 5;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 2rem auto;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            position: relative;
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .together-text {
+            background: linear-gradient(90deg, #ff69b4, #ff3366, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .long-distance {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+        
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .confetti {
+            position: fixed;
+            z-index: 999;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="romantic-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:1000;display:flex;justify-content:center;align-items:center;flex-direction:column;animation:fadeOut 2s 2s forwards">
+        <h1 style="font-family:'Dancing Script';font-size:3rem;color:#ff69b4">For Someone Very Special...</h1>
+    </div>
+    <div class="countdown" id="countdown" style="display:none">
+        <h1 class="text-4xl font-bold mb-4">Our Special Countdown</h1>
+        <p>The magic begins in:</p>
+        <div id="countdown-timer">-- : -- : --</div>
+    </div>
+
+    <div class="birthday-content" id="birthday-content">
+        <h1 class="text-5xl font-bold mb-8 text-pink-500">HAPPY BIRTHDAY MY LOVE!</h1>
+        
+        <div class="together-text">Though We're Apart, You're Always in My Heart</div>
+        
+        <div class="photo-frame">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b94319b7-5986-49df-9a0b-cc98a714e985.png" alt="Couple photo - us smiling together with romantic sunset in background, holding hands" />
+        </div>
+        
+        <div class="long-distance">
+            Kilometers can't measure how close you are to my heart. This distance is just temporary, but my love is eternal.
+        </div>
+        
+        <div class="cake-container">
+            <div class="cake">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5861fe74-976b-44f0-b20d-482a97e77127.png" alt="Beautiful birthday cake with pink frosting, colorful sprinkles, and glowing candles">
+                <div class="candle" style="left: 50%;"></div>
+                <div class="flame" style="left: 50%;"></div>
+            </div>
+        </div>
+        
+        <div class="message-container">
+            <p class="message">To the most beautiful soul I've ever known,</p>
+            <p class="message">Today is your day - a day filled with love, joy, and all the happiness you deserve.</p>
+            <p class="message">Even though we're miles apart, my love for you knows no distance. I'm celebrating you in my heart every moment.</p>
+            <p class="message">You've brought so much light into my life. Today, I hope this little surprise brings some sparkle to your special day.</p>
+            <p class="message">I wish I could be there to hold your hand, kiss you, and celebrate with you. But don't worry, we'll make up for all these missed moments soon!</p>
+            <p class="signature">Forever yours</p>
+        </div>
+        
+        <button id="more-messages-btn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full mt-4 transition-all duration-300">
+            Click for More Sweet Messages
+        </button>
+        
+        <div id="video-surprise" class="hidden mt-8">
+            <video controls width="500" class="rounded-lg shadow-xl mx-auto">
+                <source src="https://github.com/Rupeshpandey09/video/raw/refs/heads/main/WhatsApp%20Video%202025-08-07%20at%2023.44.09_496cde0b.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p class="text-center mt-4 text-pink-300">A little video message just for you!</p>
+        </div>
+    </div>
+    
+    <div id="created-for" class="mt-8 text-gray-400 text-sm text-center">
+        Created with love for you, my darling ❤️
+    </div>
+    
+    <audio id="birthday-audio" loop>
+        <source src="https://github.com/Rupeshpandey09/gift/raw/refs/heads/main/Happy%20Birthday%20to%20you%20%F0%9F%8E%89%F0%9F%8E%89%20%5B_RgRvHwzE4I%5D.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Check if it's August 21st
+        function checkBirthday() {
+            const now = new Date();
+            const august21 = new Date(Date.UTC(now.getFullYear(), 7, 21, 0, 0, 0)); // Using UTC to avoid timezone issues
+            
+            if (now >= august21) {
+                startBirthdayCelebration();
+            } else {
+                startCountdown(august21);
+            }
+        }
+        
+        // Countdown to August 21st
+        function startCountdown(targetDate) {
+            const countdownElement = document.getElementById('countdown-timer');
+            
+            const interval = setInterval(() => {
+                const now = new Date();
+                // Ensure we're comparing times correctly across timezones
+                const nowUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 
+                                    now.getHours(), now.getMinutes(), now.getSeconds());
+                const distance = targetDate - nowUTC;
+                
+                if (distance <= 0) {
+                    clearInterval(interval);
+                    startBirthdayCelebration();
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                const countdownStr = 
+                    `<span class="time-block">${days.toString().padStart(2, '0')}</span> days : 
+                     <span class="time-block">${hours.toString().padStart(2, '0')}</span> : 
+                     <span class="time-block">${minutes.toString().padStart(2, '0')}</span> : 
+                     <span class="time-block">${seconds.toString().padStart(2, '0')}</span>`;
+                
+                countdownElement.innerHTML = countdownStr;
+            }, 1000);
+        }
+        
+        // Birthday celebration begins
+        function startBirthdayCelebration() {
+            document.getElementById('countdown').style.display = 'none';
+            document.getElementById('birthday-content').style.display = 'flex';
+            
+            // Play birthday music
+            const audio = document.getElementById('birthday-audio');
+            audio.play().catch(e => console.log("Auto-play was prevented: ", e));
+            
+            // Create fireworks
+            setInterval(createFirework, 300);
+            
+            // Confetti explosion on start
+            setTimeout(() => {
+                for(let i = 0; i < 100; i++) {
+                    createConfetti();
+                }
+            }, 1000);
+            
+            // Floating hearts
+            setInterval(createHeart, 800);
+            
+            // More messages button
+            document.getElementById('more-messages-btn').addEventListener('click', showMoreMessages);
+        }
+        
+        // Create firework animation
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.8;
+            
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            
+            // Random movement
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 50 + Math.random() * 150;
+            const xDist = Math.cos(angle) * distance;
+            const yDist = Math.sin(angle) * distance;
+            
+            firework.style.setProperty('--x', `${xDist}px`);
+            firework.style.setProperty('--y', `${yDist}px`);
+            
+            // Random color
+            const colors = ['#ff0000', '#ff69b4', '#ff8a00', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#8000ff'];
+            firework.style.boxShadow = `0 0 10px 5px ${colors[Math.floor(Math.random() * colors.length)]}`;
+            
+            document.body.appendChild(firework);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                firework.remove();
+            }, 2000);
+        }
+        
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            // Random start position
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = `${startX}px`;
+            heart.style.bottom = '0';
+            
+            // Random size and animation duration
+            const size = 1 + Math.random() * 3;
+            const duration = 3 + Math.random() * 4;
+            
+            heart.style.fontSize = `${size}rem`;
+            heart.style.animationDuration = `${duration}s`;
+            
+            document.body.appendChild(heart);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Create colorful confetti
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            
+            // Random shapes and colors
+            const shapes = ['circle', 'square', 'triangle'];
+            const colors = ['#ff69b4', '#ff0000', '#00ffff', '#ffff00', '#00ff00', '#ff8a00'];
+            
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = `${Math.random() * 10 + 5}px`;
+            confetti.style.height = `${Math.random() * 10 + 5}px`;
+            confetti.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)] === 'circle' ? '50%' : '0';
+            confetti.style.border = shapes[Math.floor(Math.random() * shapes.length)] === 'triangle' ? '5px solid transparent' : 'none';
+            confetti.style.borderBottom = shapes[Math.floor(Math.random() * shapes.length)] === 'triangle' ? `10px solid ${colors[Math.floor(Math.random() * colors.length)]}` : 'none';
+            
+            // Random position and animation
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.top = '-10px';
+            
+            document.body.appendChild(confetti);
+            
+            // Falling animation
+            const duration = Math.random() * 3 + 2;
+            confetti.style.animation = `fall ${duration}s linear forwards`;
+            
+            // Remove after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, duration * 1000);
+        }
+        
+        // Show additional messages
+        const additionalMessages = [
+            "I can't wait for the day when we won't have to celebrate birthdays apart anymore. Every second with you is precious to me.",
+            "You make every day brighter, and today I want to make sure your day is the brightest of all.",
+            "I keep all your sweet messages saved and read them whenever I miss you. They're like little pieces of your heart with me.",
+            "No matter how far apart we are, I always feel connected to you. Your love is my constant companion.",
+            "Making this surprise for you brought me so much joy. I hope it makes you smile as much as you make me smile every day."
+        ];
+        
+        function showMoreMessages() {
+            const messageContainer = document.querySelector('.message-container');
+            const randomMessage = additionalMessages[Math.floor(Math.random() * additionalMessages.length)];
+            
+            const newMessage = document.createElement('p');
+            newMessage.classList.add('message');
+            newMessage.textContent = randomMessage;
+            
+            messageContainer.insertBefore(newMessage, document.querySelector('.signature'));
+            
+            // After 3 messages, show video surprise
+            const currentMessages = document.querySelectorAll('.message').length;
+            if(currentMessages >= 5) {
+                document.getElementById('video-surprise').classList.remove('hidden');
+            }
+        }
+        
+        // Start checking for birthday
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('countdown').style.display = 'block';
+                checkBirthday();
+            }, 2000); // Match the 2s fadeOut duration
+        });
+    </script>
+</body>
+</html>
